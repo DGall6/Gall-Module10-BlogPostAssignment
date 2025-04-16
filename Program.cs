@@ -71,7 +71,7 @@ do
         }
         else
         {
-            logger.Error("Blog is null");
+            logger.Error("Blog not found");
         }
     }
     else if (choice == "4")
@@ -99,7 +99,7 @@ do
         }
         else
         {
-            logger.Error("Blog is null");
+            logger.Error("Blog not found");
         }
     }
     else if (choice == "5")
@@ -140,6 +140,10 @@ do
     else if (String.IsNullOrEmpty(choice))
     {
         break;
+    }
+    else
+    {
+        logger.Error("Invalid Input");
     }
     Console.WriteLine();
 } while (true);
@@ -202,10 +206,6 @@ static Post? InputPost(DataContext db, Blog blog, NLog.Logger logger){
     Post post = new();
     Console.WriteLine("Enter the Post title:");
     post.Title = Console.ReadLine();
-    Console.WriteLine("Enter the Post Content:");
-    post.Content = Console.ReadLine();
-    post.BlogId = blog.BlogId;
-    post.Blog = blog;
 
     ValidationContext context = new(post, null, null);
     List<ValidationResult> results = [];
@@ -233,5 +233,9 @@ static Post? InputPost(DataContext db, Blog blog, NLog.Logger logger){
         }
         return null;
     }
+    Console.WriteLine("Enter the Post Content:");
+    post.Content = Console.ReadLine();
+    post.BlogId = blog.BlogId;
+    post.Blog = blog;
     return post;
 }
